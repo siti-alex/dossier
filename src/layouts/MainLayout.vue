@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated style="background-color: #8b2639; height: 8%">
-      <q-toolbar style="margin-top: 6px">
+    <q-header elevated style="background-color: #8b2639">
+      <q-toolbar>
 
         <q-toolbar-title>
           Dossier App
@@ -16,7 +16,7 @@
       bordered
     >
       <div>
-          <q-item class="q-mb-sm" clickable v-ripple>
+          <q-item clickable v-ripple>
             <q-item-section avatar>
               <q-avatar>
                 <img src="~assets/admin.png">
