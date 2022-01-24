@@ -12,6 +12,14 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
   return {
+    framework: {
+      plugins: [
+        'Notify'
+      ],
+      config: {
+        notify: { /* look at QuasarConfOptions from the API card */ }
+      }
+    },
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
 
@@ -22,6 +30,7 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'axios'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

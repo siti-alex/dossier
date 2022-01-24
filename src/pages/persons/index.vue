@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import { api } from 'boot/axios'
+
 const contacts = [ {
   id: 1,
   name: 'Ruddy Jedrzej',
@@ -78,6 +81,19 @@ export default {
       contacts,
       offline
     }
+  },
+  methods: {
+    loadData() {
+      // api.get('/todos/1')
+      api.get('/persons')
+        .then((response) => {
+          console.log(response);
+        })
+      }
+  },
+  created() {
+    this.loadData();
   }
+
 }
 </script>
