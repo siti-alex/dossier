@@ -61,7 +61,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Люди',
+    title: 'Контакты',
     caption: 'Список контактов',
     icon: 'person',
     link: '/persons'

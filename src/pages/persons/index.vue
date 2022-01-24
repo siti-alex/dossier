@@ -2,6 +2,7 @@
   <div class="full-width">
     <q-toolbar class="text-black shadow-2">
 <!--      <q-toolbar-title>Контакты</q-toolbar-title>-->
+      <q-btn flat @click="showNewPerson" style="color: #8b2639;">Добавить запись</q-btn>
       <q-input square filled dense class="absolute-right" style="padding-top: 5px; padding-right: 5px; width: 300px">
         <template v-slot:append>
           <q-icon name="search"/>
@@ -34,11 +35,13 @@
       <q-separator />
     </q-list>
   </div>
+  <new-person ref="newPerson"></new-person>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { api } from 'boot/axios'
+import NewPerson from "pages/persons/newPerson";
 
 const contacts = [ {
   id: 1,
@@ -76,10 +79,12 @@ const offline = [ {
 
 export default {
   name: 'persons',
+  components: {NewPerson},
   setup () {
     return {
       contacts,
-      offline
+      offline,
+      dialog: ref(false),
     }
   },
   methods: {
@@ -89,7 +94,10 @@ export default {
         .then((response) => {
           console.log(response);
         })
-      }
+      },
+    showNewPerson() {
+      this.$refs.newPerson.showDialog();
+    },
   },
   created() {
     this.loadData();
