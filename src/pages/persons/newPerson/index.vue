@@ -49,8 +49,8 @@
           <div class="text-h6">Социальные сети</div>
           <fieldset>
             <div class="flex" v-for="url in addUrl">
-              <q-input label="URL" style="width: 95%; margin-right: 10px" />
-              <q-btn flat icon="add" @click="addUrl.push(0)"></q-btn>
+              <q-input label="URL" @change="test(url)" v-model="newPerson.socialNetworks[url]" style="width: 95%; margin-right: 10px" />
+              <q-btn flat icon="add" @click="addUrl.push(addUrl[addUrl.length-1]+1)"></q-btn>
             </div>
           </fieldset>
 
@@ -112,14 +112,16 @@ export default {
       visa: null,
       dateVisa: ref('2019-02-01'),
 
-      socialNetworks: [
-
-      ]
+      socialNetworks: [],
     }
   }),
   methods: {
     showDialog() {
       this.dialog = !this.dialog;
+    },
+    test(id) {
+      console.log(id);
+      console.log(this.newPerson.socialNetworks)
     }
   }
 }
