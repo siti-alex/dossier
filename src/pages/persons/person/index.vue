@@ -6,7 +6,7 @@
     </q-card-section>
     <q-card-section class="q-pt-none">
         <div class="row">
-          <q-img class="col-3" :src="`http://192.168.202.115:8004/persons/${$route.params.id}/photo`" width="250px" height="250px"></q-img>
+          <q-img class="col-3" :src="`${$axios.defaults.baseURL}/persons/${$route.params.id}/photo`" width="250px" height="250px"></q-img>
           <div class="col-9" style="margin-left: 20px">
             <q-input class="col" v-model="person.name" label="ФИО"/>
             <q-input class="col" v-model="person.placeOfPost" label="Место работы"/>
@@ -57,7 +57,6 @@
         />
 
       <hr>
-      <q-btn class="full-width text-white" style="background-color: #8b2639">Сохранить</q-btn>
 
     </q-card-section>
   </q-card>
@@ -71,21 +70,6 @@ export default {
   data: () => ({
     // serverIp: api,
     person: null,
-    addUrl: [0],
-    newPerson: {
-      name: null,
-      placeJob: null,
-      job: null,
-      dateBirth: ref('2019-02-01'),
-      telephone: null,
-      email: null,
-      passport: null,
-      datePassword: ref('2019-02-01'),
-      visa: null,
-      dateVisa: ref('2019-02-01'),
-
-      socialNetworks: [],
-    },
   }),
   methods: {
     getPerson() {
