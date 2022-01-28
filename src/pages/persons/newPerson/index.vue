@@ -47,10 +47,18 @@
           <br>
 
           <div class="text-h6">Социальные сети</div>
+<!--          <fieldset>-->
+<!--            <div class="flex" v-for="url in addUrl">-->
+<!--              <q-input label="URL" @change="test(url)" v-model="newPerson.socialNetworks[url]" style="width: 95%; margin-right: 10px" />-->
+<!--              <q-btn flat icon="add" @click="addUrl.push(addUrl[addUrl.length-1]+1)"></q-btn>-->
+<!--            </div>-->
+<!--          </fieldset>-->
           <fieldset>
-            <div class="flex" v-for="url in addUrl">
-              <q-input label="URL" @change="test(url)" v-model="newPerson.socialNetworks[url]" style="width: 95%; margin-right: 10px" />
-              <q-btn flat icon="add" @click="addUrl.push(addUrl[addUrl.length-1]+1)"></q-btn>
+            <div v-for="soc in newPerson.socialNetworks" class="row">
+              <q-input class="col-5" label="Название" v-model="soc.name"/>
+              <q-input class="col-5" label="URL" v-model="soc.url"/>
+              <q-btn class="col-2" flat icon="add" @click="newPerson.socialNetworks.push(Object.create(social))"></q-btn>
+              <q-btn flat @click="test">test</q-btn>
             </div>
           </fieldset>
 
@@ -100,6 +108,10 @@ export default {
   data: () => ({
     // dialog: false,
     addUrl: [0],
+    social: {
+      name: null,
+      url: null,
+    },
     newPerson: {
       name: null,
       placeJob: null,
@@ -112,16 +124,25 @@ export default {
       visa: null,
       dateVisa: ref('2019-02-01'),
 
-      socialNetworks: [],
+      socialNetworks: [
+        {
+          name: null,
+          url: null,
+        }
+      ],
     }
   }),
   methods: {
     showDialog() {
       this.dialog = !this.dialog;
     },
-    test(id) {
-      console.log(id);
+    test() {
+      console.log(this.social)
       console.log(this.newPerson.socialNetworks)
+    },
+    networksConstruct(name, url) {
+      this.name;
+      this.url;
     }
   }
 }
