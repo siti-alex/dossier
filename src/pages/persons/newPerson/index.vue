@@ -54,22 +54,22 @@
 <!--            </div>-->
 <!--          </fieldset>-->
           <fieldset>
-            <div v-for="soc in newPerson.socialNetworks" class="row">
-              <q-input class="col-5" label="Название" v-model="soc.name"/>
-              <q-input class="col-5" label="URL" v-model="soc.url"/>
-              <q-btn class="col-2" flat icon="add" @click="newPerson.socialNetworks.push(Object.create(social))"></q-btn>
-              <q-btn flat @click="test">test</q-btn>
+            <div v-for="soc in newPerson.socialNetworks" class="row inline" style="width: 100%">
+              <q-input label="Название" v-model="soc.name" style="width: 25%; margin-right: 20px"/>
+              <q-input label="URL" v-model="soc.url" style="width: 70%"/>
             </div>
+            <q-btn flat rounded icon="add" @click="newPerson.socialNetworks.push(Object.create(social))" style="margin: -4%"></q-btn>
           </fieldset>
 
           <br>
 
           <div class="text-h6">Хобби</div>
           <fieldset>
-            <q-input
-              filled
-              type="textarea"
-            />
+            <div v-for="hob in newPerson.hobbies" class="row inline" style="width: 100%">
+              <q-input label="Заметка" v-model="hob.name" style="width: 25%; margin-right: 20px"/>
+              <q-input label="Описание" v-model="hob.comment" style="width: 70%"/>
+            </div>
+            <q-btn flat rounded icon="add" @click="newPerson.hobbies.push(Object.create(hobbi))" style="margin: -4%"></q-btn>
           </fieldset>
 
           <br>
@@ -112,6 +112,10 @@ export default {
       name: null,
       url: null,
     },
+    hobbi: {
+      name: null,
+      comment: null,
+    },
     newPerson: {
       name: null,
       placeJob: null,
@@ -130,6 +134,13 @@ export default {
           url: null,
         }
       ],
+
+      hobbies: [
+        {
+          name: null,
+          comment: null,
+        }
+      ],
     }
   }),
   methods: {
@@ -137,13 +148,8 @@ export default {
       this.dialog = !this.dialog;
     },
     test() {
-      console.log(this.social)
-      console.log(this.newPerson.socialNetworks)
+      console.log(this.newPerson)
     },
-    networksConstruct(name, url) {
-      this.name;
-      this.url;
-    }
   }
 }
 </script>
