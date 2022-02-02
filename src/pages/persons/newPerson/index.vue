@@ -22,12 +22,16 @@
           <div class="row">
 
             <div>
-              <q-file filled v-model="photo" label="Вставить фото" @update:model-value="imgPreview">
+              <q-file filled v-model="photo" v-if="!photo" label="Вставить фото" @update:model-value="imgPreview">
                 <template v-slot:prepend>
                   <q-icon name="attachment" />
                 </template>
               </q-file>
-              <q-img :src="previewImg" v-if="photo" width="250px" height="250px"></q-img>
+
+              <q-img :src="previewImg" v-if="photo" width="250px" height="250px">
+                <q-icon class="absolute all-pointer-events" @click="photo = null" size="32px" name="close" color="white" style="top: 8px; left: 85%; cursor: pointer">
+                </q-icon>
+              </q-img>
             </div>
 
             <div class="col-9" style="margin-left: 20px">
@@ -160,7 +164,7 @@ export default {
       }
     },
     test() {
-      console.log(this.newPerson)
+      console.log('hello');
     },
     submit() {
 
