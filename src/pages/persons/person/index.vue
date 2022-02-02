@@ -1,6 +1,11 @@
 <template>
   <q-card v-if="person">
 <!--    <q-img :src=""></q-img>-->
+    <q-card-actions class="flex flex-center row" style="margin-top: 20px">
+      <q-btn class="col text-subtitle1" label="Экспорт" icon-right="file_download" :href="`${$axios.defaults.baseURL}/persons/${$route.params.id}/report`" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Редактировать" icon-right="edit" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Удалить" icon-right="file_download" color="red-10" flat></q-btn>
+    </q-card-actions>
     <q-card-section>
       <div class="text-h6">Общая информация</div>
     </q-card-section>
@@ -42,7 +47,7 @@
 
       <div class="text-h6">Хобби</div>
         <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies.length !== 0">
-          <q-input :label="hob.type" v-model="hob.url" style="width: 100%"/>
+          <q-input :label="hob.name" v-model="hob.comment" style="width: 100%"/>
         </div>
         <div v-else class="text-subtitle2">
           Отсутствуют
@@ -59,6 +64,7 @@
       <hr>
 
     </q-card-section>
+
   </q-card>
 </template>
 
@@ -78,6 +84,9 @@ export default {
         this.person = response.data;
         console.log(this.person);
       })
+    },
+    export() {
+
     },
   },
   created() {

@@ -24,22 +24,22 @@
           <fieldset>
             <div class="row">
               <q-input class="col" v-model="newPerson.name" label="ФИО" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.placeJob" label="Место работы" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.job" label="Должность" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.placeOfPost" label="Место работы" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.post" label="Должность" style="margin-right: 20px"/>
             </div>
             <br>
             <div class="row">
-              <q-input class="col" v-model="newPerson.dateBirth" type="date" label="Дата рождения" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.telephone" label="Телефон" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.dateOfBirth" type="date" label="Дата рождения" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.phone" label="Телефон" style="margin-right: 20px"/>
               <q-input class="col" v-model="newPerson.email" label="Email" style="margin-right: 20px"/>
             </div>
             <br>
             <div class="row">
-              <q-input class="col" v-model="newPerson.passport" label="Номер паспорта" style="margin-right: 20px"/>
-              <q-input class="col" type="date" v-model="newPerson.datePassword" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.passportNumber" label="Номер паспорта" style="margin-right: 20px"/>
+              <q-input class="col" type="date" v-model="newPerson.passportExpiredDate" label="Дата выдачи паспорта" style="margin-right: 20px"/>
               <q-separator vertical style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.visa" label="Номер Visa" style="margin-right: 20px"/>
-              <q-input class="col" type="date" v-model="newPerson.dateVisa" label="Дата окончания Visa" style="margin-right: 20px"/>
+              <q-input class="col" v-model="newPerson.visaNumber" label="Номер Visa" style="margin-right: 20px"/>
+              <q-input class="col" type="date" v-model="newPerson.visaExpiredDate" label="Дата окончания Visa" style="margin-right: 20px"/>
             </div>
 
           </fieldset>
@@ -54,11 +54,11 @@
 <!--            </div>-->
 <!--          </fieldset>-->
           <fieldset>
-            <div v-for="soc in newPerson.socialNetworks" class="row inline" style="width: 100%">
-              <q-input label="Название" v-model="soc.name" style="width: 25%; margin-right: 20px"/>
+            <div v-for="soc in newPerson.socialNetAccs" class="row inline" style="width: 100%">
+              <q-input label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
               <q-input label="URL" v-model="soc.url" style="width: 70%"/>
             </div>
-            <q-btn flat rounded icon="add" @click="newPerson.socialNetworks.push(Object.create(social))" style="margin: -4%"></q-btn>
+            <q-btn flat rounded icon="add" @click="newPerson.socialNetAccs.push(Object.create(social))" style="margin: -4%"></q-btn>
           </fieldset>
 
           <br>
@@ -83,7 +83,7 @@
           </fieldset>
 
           <hr>
-          <q-btn class="full-width text-white" style="background-color: #8b2639">Сохранить</q-btn>
+          <q-btn class="full-width text-white" @click="submit" style="background-color: #8b2639">Сохранить</q-btn>
 
 
 
@@ -97,6 +97,7 @@
 
 <script>
 import { ref } from 'vue'
+import {api} from "boot/axios";
 
 export default {
   name: 'newPerson',
@@ -109,7 +110,7 @@ export default {
     // dialog: false,
     addUrl: [0],
     social: {
-      name: null,
+      type: null,
       url: null,
     },
     hobbi: {
@@ -118,19 +119,20 @@ export default {
     },
     newPerson: {
       name: null,
-      placeJob: null,
-      job: null,
-      dateBirth: ref('2019-02-01'),
-      telephone: null,
+      placeOfPost: null,
+      post: null,
+      dateOfBirth: '2019-02-01',
+      phone: null,
       email: null,
-      passport: null,
-      datePassword: ref('2019-02-01'),
-      visa: null,
-      dateVisa: ref('2019-02-01'),
+      passportNumber: null,
+      passportExpiredDate: '2019-02-01',
+      visaNumber: null,
+      visaExpiredDate: '2019-02-01',
+      photo: null,
 
-      socialNetworks: [
+      socialNetAccs: [
         {
-          name: null,
+          type: null,
           url: null,
         }
       ],
@@ -139,6 +141,12 @@ export default {
         {
           name: null,
           comment: null,
+        }
+      ],
+      notes: [
+        {
+          name: null,
+          text: null,
         }
       ],
     }
@@ -150,6 +158,56 @@ export default {
     test() {
       console.log(this.newPerson)
     },
+    submit() {
+      const data = new FormData();
+      data.append('name', this.newPerson.name);
+      data.append('placeOfPost', this.newPerson.placeOfPost);
+      data.append('post', this.newPerson.post);
+      data.append('dateOfBirth', this.newPerson.dateOfBirth);
+      data.append('phone', this.newPerson.phone);
+      data.append('email', this.newPerson.email);
+      data.append('passportNumber', this.newPerson.passportNumber);
+      data.append('passportExpiredDate', this.newPerson.passportExpiredDate);
+      data.append('visaNumber', this.newPerson.visaNumber);
+      data.append('visaExpiredDate', this.newPerson.visaExpiredDate);
+      data.append('photo', this.newPerson.photo);
+
+      // data.append('socialNetAccs', this.newPerson.socialNetAccs);
+      // data.append('hobbies', this.newPerson.hobbies);
+      // data.append('notes', this.newPerson.notes);
+
+      this.newPerson.socialNetAccs.forEach((value) => {
+        const soc = {
+          type: value.type,
+          url: value.url
+        }
+        data.append('socialNetAccs', JSON.stringify(soc))
+      });
+
+      this.newPerson.hobbies.forEach((value) => {
+        const hob = {
+          name: value.name,
+          comment: value.comment
+        }
+        data.append('hobbies', JSON.stringify(hob))
+      });
+
+      this.newPerson.notes.forEach((value) => {
+        const not = {
+          name: value.name,
+          text: value.text
+        }
+        data.append('notes', JSON.stringify(not))
+      })
+
+
+
+
+      console.log(data);
+      api.post('/persons',data).then((response) => {
+        console.log(response);
+      })
+    }
   }
 }
 </script>
