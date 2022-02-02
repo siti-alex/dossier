@@ -128,7 +128,6 @@ export default {
       passportExpiredDate: '2019-02-01',
       visaNumber: null,
       visaExpiredDate: '2019-02-01',
-      photo: null,
 
       socialNetAccs: [
         {
@@ -149,7 +148,8 @@ export default {
           text: null,
         }
       ],
-    }
+    },
+    photo: null,
   }),
   methods: {
     showDialog() {
@@ -159,6 +159,11 @@ export default {
       console.log(this.newPerson)
     },
     submit() {
+
+      const fullObject = new FormData();
+      fullObject.append('personDTO', JSON.stringify(this.newPerson));
+      fullObject.append('photo', this.photo);
+
       const data = new FormData();
       data.append('name', this.newPerson.name);
       data.append('placeOfPost', this.newPerson.placeOfPost);
@@ -203,8 +208,8 @@ export default {
 
 
 
-      console.log(data);
-      api.post('/persons',data).then((response) => {
+      console.log(fullObject);
+      api.post('/persons',fullObject).then((response) => {
         console.log(response);
       })
     }
