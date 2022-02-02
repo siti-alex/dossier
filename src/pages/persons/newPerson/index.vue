@@ -10,7 +10,6 @@
       <q-card>
         <q-bar style="background-color: #8b2639">
           <q-space />
-
           <q-btn dense flat icon="close" v-close-popup class="text-white">
             <q-tooltip class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
@@ -19,47 +18,43 @@
         <q-card-section>
           <div class="text-h6">Общая информация</div>
         </q-card-section>
-
         <q-card-section class="q-pt-none">
-          <fieldset>
-            <div class="row">
+          <div class="row">
 
-              <q-file class="col" outlined v-model="photo">
+            <div>
+              <q-file filled v-model="photo" label="Вставить фото" @update:model-value="imgPreview">
                 <template v-slot:prepend>
-                  <q-icon name="attach_file" />
+                  <q-icon name="attachment" />
                 </template>
               </q-file>
-
-              <q-input class="col" v-model="newPerson.name" label="ФИО" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.placeOfPost" label="Место работы" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.post" label="Должность" style="margin-right: 20px"/>
-            </div>
-            <br>
-            <div class="row">
-              <q-input class="col" v-model="newPerson.dateOfBirth" type="date" label="Дата рождения" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.phone" label="Телефон" style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.email" label="Email" style="margin-right: 20px"/>
-            </div>
-            <br>
-            <div class="row">
-              <q-input class="col" v-model="newPerson.passportNumber" label="Номер паспорта" style="margin-right: 20px"/>
-              <q-input class="col" type="date" v-model="newPerson.passportExpiredDate" label="Дата выдачи паспорта" style="margin-right: 20px"/>
-              <q-separator vertical style="margin-right: 20px"/>
-              <q-input class="col" v-model="newPerson.visaNumber" label="Номер Visa" style="margin-right: 20px"/>
-              <q-input class="col" type="date" v-model="newPerson.visaExpiredDate" label="Дата окончания Visa" style="margin-right: 20px"/>
+              <q-img :src="previewImg" v-if="photo" width="250px" height="250px"></q-img>
             </div>
 
-          </fieldset>
+            <div class="col-9" style="margin-left: 20px">
+              <q-input class="col" v-model="newPerson.name" label="ФИО"/>
+              <q-input class="col" v-model="newPerson.placeOfPost" label="Место работы"/>
+              <q-input class="col" v-model="newPerson.post" label="Должность"/>
+              <q-input class="col" v-model="newPerson.dateOfBirth" type="date" label="Дата рождения"/>
+            </div>
+          </div>
 
           <br>
+          <div class="row">
+            <q-input class="col" v-model="newPerson.phone" label="Телефон" style="margin-right: 20px"/>
+            <q-input class="col" v-model="newPerson.email" label="Email" style="margin-right: 20px"/>
+          </div>
+          <br>
+          <div class="row">
+            <q-input class="col" v-model="newPerson.passportNumber" label="Номер паспорта" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.passportExpiredDate" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+            <q-separator vertical style="margin-right: 20px"/>
+            <q-input class="col" v-model="newPerson.visaNumber" label="Номер Visa" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.visaExpiredDate" label="Дата окончания Visa" style="margin-right: 20px"/>
+          </div>
+
+          <div style="height: 50px"/>
 
           <div class="text-h6">Социальные сети</div>
-<!--          <fieldset>-->
-<!--            <div class="flex" v-for="url in addUrl">-->
-<!--              <q-input label="URL" @change="test(url)" v-model="newPerson.socialNetworks[url]" style="width: 95%; margin-right: 10px" />-->
-<!--              <q-btn flat icon="add" @click="addUrl.push(addUrl[addUrl.length-1]+1)"></q-btn>-->
-<!--            </div>-->
-<!--          </fieldset>-->
           <fieldset>
             <div v-for="soc in newPerson.socialNetAccs" class="row inline" style="width: 100%">
               <q-input label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
@@ -68,7 +63,8 @@
             <q-btn flat rounded icon="add" @click="newPerson.socialNetAccs.push(Object.create(social))" style="margin: -4%"></q-btn>
           </fieldset>
 
-          <br>
+
+          <div style="height: 50px"/>
 
           <div class="text-h6">Хобби</div>
           <fieldset>
@@ -79,23 +75,17 @@
             <q-btn flat rounded icon="add" @click="newPerson.hobbies.push(Object.create(hobbi))" style="margin: -4%"></q-btn>
           </fieldset>
 
-          <br>
+
+          <div style="height: 50px"/>
 
           <div class="text-h6">Примечание</div>
-          <fieldset>
-            <q-input
-              filled
-              type="textarea"
-            />
-          </fieldset>
+          <q-input
+            filled
+            type="textarea"
+          />
 
           <hr>
           <q-btn class="full-width text-white" @click="submit" style="background-color: #8b2639">Сохранить</q-btn>
-
-
-
-
-
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -116,6 +106,7 @@ export default {
   data: () => ({
     // dialog: false,
     addUrl: [0],
+    previewImg: null,
     social: {
       type: null,
       url: null,
@@ -161,6 +152,12 @@ export default {
   methods: {
     showDialog() {
       this.dialog = !this.dialog;
+    },
+    imgPreview() {
+      if (this.photo) {
+        const file = this.photo;
+        this.previewImg = URL.createObjectURL(file);
+      }
     },
     test() {
       console.log(this.newPerson)
