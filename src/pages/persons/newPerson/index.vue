@@ -23,6 +23,13 @@
         <q-card-section class="q-pt-none">
           <fieldset>
             <div class="row">
+
+              <q-file class="col" outlined v-model="photo">
+                <template v-slot:prepend>
+                  <q-icon name="attach_file" />
+                </template>
+              </q-file>
+
               <q-input class="col" v-model="newPerson.name" label="ФИО" style="margin-right: 20px"/>
               <q-input class="col" v-model="newPerson.placeOfPost" label="Место работы" style="margin-right: 20px"/>
               <q-input class="col" v-model="newPerson.post" label="Должность" style="margin-right: 20px"/>
@@ -161,7 +168,7 @@ export default {
     submit() {
 
       const fullObject = new FormData();
-      fullObject.append('personDTO', JSON.stringify(this.newPerson));
+      fullObject.append('dto', JSON.stringify(this.newPerson));
       fullObject.append('photo', this.photo);
 
       const data = new FormData();

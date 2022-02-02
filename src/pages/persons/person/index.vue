@@ -5,7 +5,7 @@
       <q-btn class="col text-subtitle1" label="Экспорт" icon-right="file_download" :href="`${$axios.defaults.baseURL}/persons/${$route.params.id}/report`" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="!edit" icon-right="edit" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="edit" icon-right="edit_off" color="red-10" flat></q-btn>
-      <q-btn class="col text-subtitle1" label="Удалить" icon-right="file_download" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Удалить" @click="confirm" icon-right="file_download" color="red-10" flat></q-btn>
     </q-card-actions>
     <q-card-section>
       <div class="text-h6">Общая информация</div>
@@ -70,10 +70,32 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 export default {
   name: "person",
+  setup () {
+    const $q = useQuasar()
+
+    function confirm () {
+      $q.dialog({
+        title: 'Confirm',
+        message: 'Would you like to turn on the wifi?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        // console.log('>>>> OK')
+      }).onOk(() => {
+        // console.log('>>>> second OK catcher')
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
+
+    return { alert, confirm, prompt }
+  },
   data: () => ({
     // serverIp: api,
     person: null,
