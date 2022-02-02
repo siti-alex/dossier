@@ -5,7 +5,7 @@
       <q-btn class="col text-subtitle1" label="Экспорт" icon-right="file_download" :href="`${$axios.defaults.baseURL}/persons/${$route.params.id}/report`" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="!edit" icon-right="edit" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="edit" icon-right="edit_off" color="red-10" flat></q-btn>
-      <q-btn class="col text-subtitle1" label="Удалить" @click="confirm" icon-right="file_download" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Удалить" @click="test" icon-right="file_download" color="red-10" flat></q-btn>
     </q-card-actions>
     <q-card-section>
       <div class="text-h6">Общая информация</div>
@@ -64,7 +64,7 @@
         />
 
       <hr>
-      <q-btn class="full-width text-white" v-if="edit" style="background-color: #8b2639">Сохранить</q-btn>
+      <q-btn class="full-width text-white" @click="save" v-if="edit" style="background-color: #8b2639">Сохранить</q-btn>
     </q-card-section>
   </q-card>
 </template>
@@ -74,34 +74,47 @@ import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 export default {
   name: "person",
-  setup () {
-    const $q = useQuasar()
-
-    function confirm () {
-      $q.dialog({
-        title: 'Confirm',
-        message: 'Would you like to turn on the wifi?',
+  // setup () {
+  //   // const $q = useQuasar()
+  //
+  //   function confirm () {
+  //     $q.dialog({
+  //       title: 'Подтвердите',
+  //       message: 'Вы действительно хотите удалить данного человека из базы?',
+  //       cancel: true,
+  //       persistent: true
+  //     }).onOk(() => {
+  //       console.log('hello')
+  //     }).onCancel(() => {
+  //       // console.log('>>>> Cancel')
+  //     }).onDismiss(() => {
+  //       // console.log('I am triggered on both OK and Cancel')
+  //     })
+  //   }
+  //
+  //   return { alert, confirm, prompt }
+  // },
+  data: () => ({
+    // serverIp: api,
+    person: null,
+    edit: false,
+    $q: useQuasar()
+  }),
+  methods: {
+    test() {
+      this.$q.dialog({
+        title: 'Подтвердите',
+        message: 'Вы действительно хотите удалить данного человека из базы?',
         cancel: true,
         persistent: true
       }).onOk(() => {
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
+        this.deleting();
       }).onCancel(() => {
         // console.log('>>>> Cancel')
       }).onDismiss(() => {
         // console.log('I am triggered on both OK and Cancel')
       })
-    }
-
-    return { alert, confirm, prompt }
-  },
-  data: () => ({
-    // serverIp: api,
-    person: null,
-    edit: false,
-  }),
-  methods: {
+    },
     getPerson() {
       api.get(`/persons/${this.$route.params.id}`)
       .then((response) => {
@@ -111,6 +124,22 @@ export default {
     },
     editing() {
       this.edit = !this.edit;
+    },
+    deleting() {
+      api.delete(`/persons/${this.$route.params.id}`).then((response) => {
+        console.log(response);
+        location.href = `/persons`;
+      })
+    },
+    save() {
+      const fullObject = new FormData();
+      fullObject.append('dto', JSON.stringify(this.person));
+      fullObject.append('photo', this.person.photo);
+
+      api.put(`/persons/${this.$route.params.id}`, fullObject).then((response) => {
+        console.log(response);
+        // location.href = `/persons`;
+      })
     },
   },
   created() {

@@ -218,6 +218,7 @@ export default {
       console.log(fullObject);
       api.post('/persons',fullObject).then((response) => {
         console.log(response);
+        location.href = `/persons`;
       })
     }
   }
