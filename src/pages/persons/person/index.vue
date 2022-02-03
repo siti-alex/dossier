@@ -12,7 +12,27 @@
     </q-card-section>
     <q-card-section class="q-pt-none">
         <div class="row">
-          <q-img class="col-3" :src="`${$axios.defaults.baseURL}/persons/${$route.params.id}/photo`" width="250px" height="250px"></q-img>
+<!--          <q-img class="col-3" :src="`${$axios.defaults.baseURL}/persons/${$route.params.id}/photo`" width="250px" height="250px"/>-->
+
+            <q-img class="col-3" v-if="!close" :src="`${$axios.defaults.baseURL}/persons/${$route.params.id}/photo`" width="250px" height="250px">
+              <q-icon class="absolute all-pointer-events" v-if="edit" @click="photo = null; close = true" size="32px" name="close" color="white" style="top: 8px; left: 85%; cursor: pointer">
+              </q-icon>
+            </q-img>
+
+             <div v-if="close == true">
+                <q-file filled v-model="photo" v-if="photo == null" label="Вставить фото" @update:model-value="imgPreview">
+                  <template v-slot:prepend>
+                    <q-icon name="attachment" />
+                  </template>
+                </q-file>
+
+                <q-img :src="previewImg" v-if="photo" width="250px" height="250px">
+                  <q-icon class="absolute all-pointer-events" @click="photo = null" size="32px" name="close" color="white" style="top: 8px; left: 85%; cursor: pointer">
+                  </q-icon>
+                </q-img>
+            </div>
+
+
           <div class="col-9" style="margin-left: 20px">
             <q-input class="col" v-model="person.name" :readonly="!edit" label="ФИО"/>
             <q-input class="col" v-model="person.placeOfPost" :readonly="!edit" label="Место работы"/>
@@ -97,10 +117,19 @@ export default {
   data: () => ({
     // serverIp: api,
     person: null,
+    close: null,
+    photo: false,
     edit: false,
+    previewImg: null,
     $q: useQuasar()
   }),
   methods: {
+    imgPreview() {
+      if (this.photo) {
+        const file = this.photo;
+        this.previewImg = URL.createObjectURL(file);
+      }
+    },
     test() {
       this.$q.dialog({
         title: 'Подтвердите',
@@ -132,11 +161,12 @@ export default {
       })
     },
     save() {
+      console.log(this.person);
       const fullObject = new FormData();
       fullObject.append('dto', JSON.stringify(this.person));
       fullObject.append('photo', this.person.photo);
 
-      api.put(`/persons/${this.$route.params.id}`, fullObject).then((response) => {
+      api.put(`/persons`, fullObject).then((response) => {
         console.log(response);
         // location.href = `/persons`;
       })

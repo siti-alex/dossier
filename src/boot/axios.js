@@ -1,8 +1,8 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
-// const api = axios.create({ baseURL: 'http://192.168.202.115:8004' })
-const api = axios.create({ baseURL: 'http://213.87.96.9:6001' })
+const api = axios.create({ baseURL: 'http://192.168.202.115:8004' })
+// const api = axios.create({ baseURL: 'http://213.87.96.9:6001' })
 // const api = axios.create({ baseURL: 'https://jsonplaceholder.typicode.com' })
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
