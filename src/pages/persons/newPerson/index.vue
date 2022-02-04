@@ -84,10 +84,23 @@
           <div style="height: 50px"/>
 
           <div class="text-h6">Примечание</div>
-          <q-input
-            filled
-            type="textarea"
-          />
+          <fieldset>
+          <div v-for="not in newPerson.notes">
+            <div class="row inline" style="width: 100%">
+              <q-input label="Название примечания" v-model="not.name" style="width: 95%; margin-right: 20px"/>
+              <q-btn flat rounded icon="add" class="float-right" v-if="newPerson.notes.indexOf(not) == newPerson.notes.length-1" @click="newPerson.notes.push(Object.create(note))"></q-btn>
+            </div>
+
+            <q-input
+              filled
+              label="Описание"
+              type="textarea"
+              v-model="not.text"
+            />
+
+          </div>
+          </fieldset>
+
 
           <hr>
           <q-btn class="full-width text-white" @click="submit" style="background-color: #8b2639">Сохранить</q-btn>
@@ -119,6 +132,10 @@ export default {
     hobbi: {
       name: null,
       comment: null,
+    },
+    note: {
+      name: null,
+      text: null,
     },
     newPerson: {
       name: null,

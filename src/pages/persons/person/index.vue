@@ -62,7 +62,7 @@
           <q-input v-if="!edit" :label="soc.type" v-model="soc.url" :readonly="!edit" style="width: 100%"/>
           <q-input v-if="edit" label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
           <q-input v-if="edit" label="URL" v-model="soc.url" style="width: 70%"/>
-          <q-btn flat rounded icon="add" @click="person.socialNetAccs.push(Object.create(newSocialNetAccs))" v-if="person.socialNetAccs.indexOf(soc) == person.socialNetAccs.length-1"></q-btn>
+          <q-btn flat rounded icon="add" @click="person.socialNetAccs.push(Object.create(newSocialNetAccs))" v-if="person.socialNetAccs.indexOf(soc) == person.socialNetAccs.length-1 && edit"></q-btn>
         </div>
         <div v-else v-if="!edit" class="text-subtitle2">
           Отсутствуют
@@ -83,11 +83,18 @@
       <br>
 
       <div class="text-h6">Примечание</div>
+      <div v-for="not in person.notes">
+
         <q-input
           filled
+          :label="not.name"
           :readonly="!edit"
           type="textarea"
+          v-model="not.text"
         />
+
+      </div>
+
 
       <hr>
       <q-btn class="full-width text-white" @click="save" v-if="edit" style="background-color: #8b2639">Сохранить</q-btn>
