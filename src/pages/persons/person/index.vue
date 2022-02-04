@@ -58,7 +58,7 @@
       <br>
 
       <div class="text-h6">Социальные сети</div>
-        <div class="flex" v-for="soc in person.socialNetAccs" v-if="person.socialNetAccs.length !== 0">
+        <div class="flex" v-for="soc in person.socialNetAccs" v-if="person.socialNetAccs[0].url !== null && person.socialNetAccs[0].type !== null">
           <q-input v-if="!edit" :label="soc.type" v-model="soc.url" :readonly="!edit" style="width: 100%"/>
           <q-input v-if="edit" label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
           <q-input v-if="edit" label="URL" v-model="soc.url" style="width: 70%"/>
@@ -68,23 +68,21 @@
           Отсутствуют
         </div>
 
-<!--        Короче при редактировании открывается два инпута разных и в их массив пушится-->
 
       <br>
 
       <div class="text-h6">Хобби</div>
-        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies.length !== 0">
+        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null">
           <q-input :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>
         </div>
         <div v-else class="text-subtitle2">
           Отсутствуют
-      </div>
+        </div>
 
       <br>
 
-      <div class="text-h6">Примечание</div>
-      <div v-for="not in person.notes">
-
+      <div class="text-h6">Примечания</div>
+      <div v-for="not in person.notes" v-if="person.notes[0].name !== null && person.notes[0].text !== null">
         <q-input
           filled
           :label="not.name"
@@ -92,7 +90,9 @@
           type="textarea"
           v-model="not.text"
         />
-
+      </div>
+      <div v-else class="text-subtitle2">
+        Отсутствуют
       </div>
 
 

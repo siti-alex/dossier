@@ -83,7 +83,7 @@
 
           <div style="height: 50px"/>
 
-          <div class="text-h6">Примечание</div>
+          <div class="text-h6">Примечания</div>
           <fieldset>
           <div v-for="not in newPerson.notes">
             <div class="row inline" style="width: 100%">
