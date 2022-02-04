@@ -58,7 +58,7 @@
       <br>
 
       <div class="text-h6">Социальные сети</div>
-        <div class="flex" v-for="soc in person.socialNetAccs" v-if="person.socialNetAccs[0].url !== null && person.socialNetAccs[0].type !== null">
+        <div class="flex" v-for="soc in person.socialNetAccs" v-if="person.socialNetAccs[0].url !== null && person.socialNetAccs[0].type !== null || edit">
           <q-input v-if="!edit" :label="soc.type" v-model="soc.url" :readonly="!edit" style="width: 100%"/>
           <q-input v-if="edit" label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
           <q-input v-if="edit" label="URL" v-model="soc.url" style="width: 70%"/>
@@ -72,7 +72,7 @@
       <br>
 
       <div class="text-h6">Хобби</div>
-        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null">
+        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">
           <q-input :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>
         </div>
         <div v-else class="text-subtitle2">
@@ -82,7 +82,7 @@
       <br>
 
       <div class="text-h6">Примечания</div>
-      <div v-for="not in person.notes" v-if="person.notes[0].name !== null && person.notes[0].text !== null">
+      <div v-for="not in person.notes" v-if="person.notes[0].name !== null && person.notes[0].text !== null || edit">
         <q-input
           filled
           :label="not.name"
