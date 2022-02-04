@@ -63,8 +63,9 @@
             <div v-for="soc in newPerson.socialNetAccs" class="row inline" style="width: 100%">
               <q-input label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
               <q-input label="URL" v-model="soc.url" style="width: 70%"/>
+              <q-btn flat rounded icon="add" v-if="newPerson.socialNetAccs.indexOf(soc) == newPerson.socialNetAccs.length-1" @click="newPerson.socialNetAccs.push(Object.create(social))"></q-btn>
             </div>
-            <q-btn flat rounded icon="add" @click="newPerson.socialNetAccs.push(Object.create(social))" style="margin: -4%"></q-btn>
+
           </fieldset>
 
 
@@ -75,8 +76,8 @@
             <div v-for="hob in newPerson.hobbies" class="row inline" style="width: 100%">
               <q-input label="Заметка" v-model="hob.name" style="width: 25%; margin-right: 20px"/>
               <q-input label="Описание" v-model="hob.comment" style="width: 70%"/>
+              <q-btn flat rounded icon="add" v-if="newPerson.hobbies.indexOf(hob) == newPerson.hobbies.length-1" @click="newPerson.hobbies.push(Object.create(hobbi))"></q-btn>
             </div>
-            <q-btn flat rounded icon="add" @click="newPerson.hobbies.push(Object.create(hobbi))" style="margin: -4%"></q-btn>
           </fieldset>
 
 

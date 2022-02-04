@@ -11,29 +11,6 @@
 
     </q-toolbar>
 
-<!--    <q-list bordered separator>-->
-<!--      <q-item v-for="contact in contacts" :key="contact.id" clickable v-ripple>-->
-<!--        <q-item-section avatar>-->
-<!--          <q-avatar>-->
-<!--            <img src="https://cdn.quasar.dev/img/avatar.png">-->
-<!--          </q-avatar>-->
-<!--        </q-item-section>-->
-
-<!--        <q-item-section>-->
-<!--          <q-item-label>{{ contact.name }}</q-item-label>-->
-<!--          <q-item-label caption lines="1">Место работы</q-item-label>-->
-<!--          <q-item-label caption lines="2">Должность</q-item-label>-->
-<!--&lt;!&ndash;          <q-item-label caption lines="3">Телефон</q-item-label>&ndash;&gt;-->
-<!--&lt;!&ndash;          <q-item-label caption lines="4">Email</q-item-label>&ndash;&gt;-->
-<!--        </q-item-section>-->
-
-<!--        <q-item-section side>-->
-<!--          <q-icon name="menu_open" color="red-10" />-->
-<!--        </q-item-section>-->
-<!--      </q-item>-->
-
-<!--      <q-separator />-->
-<!--    </q-list>-->
     <div class="q-pa-md">
       <q-table
         title="Персонал"
@@ -57,7 +34,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td auto-width>
-              <q-btn size="sm" color="red-10" round dense @click="" icon="edit" />
+              <q-btn size="sm" color="red-10" round dense flat icon="edit" />
             </q-td>
             <q-td
               v-for="col in props.cols"

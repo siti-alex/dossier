@@ -5,7 +5,7 @@
       <q-btn class="col text-subtitle1" label="Экспорт" icon-right="file_download" :href="`${$axios.defaults.baseURL}/persons/${$route.params.id}/report`" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="!edit" icon-right="edit" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="edit" icon-right="edit_off" color="red-10" flat></q-btn>
-      <q-btn class="col text-subtitle1" label="Удалить" @click="test" icon-right="file_download" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Удалить" @click="confirm" icon-right="file_download" color="red-10" flat></q-btn>
     </q-card-actions>
     <q-card-section>
       <div class="text-h6">Общая информация</div>
@@ -59,11 +59,17 @@
 
       <div class="text-h6">Социальные сети</div>
         <div class="flex" v-for="soc in person.socialNetAccs" v-if="person.socialNetAccs.length !== 0">
-          <q-input :label="soc.type" v-model="soc.url" :readonly="!edit" style="width: 100%"/>
+          <q-input v-if="!edit" :label="soc.type" v-model="soc.url" :readonly="!edit" style="width: 100%"/>
+          <q-input v-if="edit" label="Название" v-model="soc.type" style="width: 25%; margin-right: 20px"/>
+          <q-input v-if="edit" label="URL" v-model="soc.url" style="width: 70%"/>
+          <q-btn flat rounded icon="add" @click="person.socialNetAccs.push(Object.create(newSocialNetAccs))" v-if="person.socialNetAccs.indexOf(soc) == person.socialNetAccs.length-1"></q-btn>
         </div>
-        <div v-else class="text-subtitle2">
+        <div v-else v-if="!edit" class="text-subtitle2">
           Отсутствуют
         </div>
+
+<!--        Короче при редактировании открывается два инпута разных и в их массив пушится-->
+
       <br>
 
       <div class="text-h6">Хобби</div>
@@ -94,29 +100,18 @@ import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 export default {
   name: "person",
-  // setup () {
-  //   // const $q = useQuasar()
-  //
-  //   function confirm () {
-  //     $q.dialog({
-  //       title: 'Подтвердите',
-  //       message: 'Вы действительно хотите удалить данного человека из базы?',
-  //       cancel: true,
-  //       persistent: true
-  //     }).onOk(() => {
-  //       console.log('hello')
-  //     }).onCancel(() => {
-  //       // console.log('>>>> Cancel')
-  //     }).onDismiss(() => {
-  //       // console.log('I am triggered on both OK and Cancel')
-  //     })
-  //   }
-  //
-  //   return { alert, confirm, prompt }
-  // },
   data: () => ({
+    //Просто пушить в персон и не рисовать их заного вифором. Пушить пустной в конец. Ограничивать конец в-ифом. Если то, то то, если нет то нет. Ииии сука убрать первоначальную хуйню она мешает
+    //
     // serverIp: api,
+    newSocialNetAccs:
+      {
+        type: null,
+        url: null,
+        person: null,
+      },
     person: null,
+    idPerson: null,
     close: null,
     photo: false,
     edit: false,
@@ -124,13 +119,20 @@ export default {
     $q: useQuasar()
   }),
   methods: {
+    test() {
+      this.newSocialNetAccs.push(Object.create(this.person.socialNetAccs[this.person.socialNetAccs.length-1]));
+      this.newSocialNetAccs[this.newSocialNetAccs.length-1].url = null;
+      this.newSocialNetAccs[this.newSocialNetAccs.length-1].type = null;
+      this.newSocialNetAccs[this.newSocialNetAccs.length-1].person = this.id;
+      console.log(this.newSocialNetAccs);
+    },
     imgPreview() {
       if (this.photo) {
         const file = this.photo;
         this.previewImg = URL.createObjectURL(file);
       }
     },
-    test() {
+    confirm() {
       this.$q.dialog({
         title: 'Подтвердите',
         message: 'Вы действительно хотите удалить данного человека из базы?',
@@ -148,11 +150,13 @@ export default {
       api.get(`/persons/${this.$route.params.id}`)
       .then((response) => {
         this.person = response.data;
+        this.idPerson = this.person.id;
         console.log(this.person);
       })
     },
     editing() {
       this.edit = !this.edit;
+      this.newSocialNetAccs.person = this.idPerson;
     },
     deleting() {
       api.delete(`/persons/${this.$route.params.id}`).then((response) => {
@@ -161,10 +165,13 @@ export default {
       })
     },
     save() {
-      console.log(this.person);
+      // if (this.newSocialNetAccs.some(value => value.url !== null && value.type !== null)) {
+      //   this.person.socialNetAccs.concat(this.newSocialNetAccs);
+      // }
+
       const fullObject = new FormData();
       fullObject.append('dto', JSON.stringify(this.person));
-      fullObject.append('photo', this.person.photo);
+      fullObject.append('photo', this.photo);
 
       api.put(`/persons`, fullObject).then((response) => {
         console.log(response);
