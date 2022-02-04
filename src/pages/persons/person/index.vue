@@ -72,12 +72,21 @@
       <br>
 
       <div class="text-h6">Хобби</div>
-        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">
-          <q-input :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>
-        </div>
-        <div v-else class="text-subtitle2">
-          Отсутствуют
-        </div>
+<!--        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">-->
+<!--          <q-input :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>-->
+<!--        </div>-->
+<!--        <div v-else class="text-subtitle2">-->
+<!--          Отсутствуют-->
+<!--        </div>-->
+            <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">
+              <q-input v-if="!edit" :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>
+              <q-input v-if="edit" label="Заметка" v-model="hob.name" style="width: 25%; margin-right: 20px"/>
+              <q-input v-if="edit" label="Описание" v-model="hob.comment" style="width: 70%"/>
+              <q-btn flat rounded icon="add" @click="person.hobbies.push(Object.create(newHob))" v-if="person.hobbies.indexOf(hob) == person.hobbies.length-1 && edit"></q-btn>
+            </div>
+            <div v-else v-if="!edit" class="text-subtitle2">
+              Отсутствуют
+            </div>
 
       <br>
 
@@ -111,12 +120,16 @@ export default {
     //Просто пушить в персон и не рисовать их заного вифором. Пушить пустной в конец. Ограничивать конец в-ифом. Если то, то то, если нет то нет. Ииии сука убрать первоначальную хуйню она мешает
     //
     // serverIp: api,
-    newSocialNetAccs:
-      {
+    newSocialNetAccs: {
         type: null,
         url: null,
         person: null,
       },
+    newHob: {
+        person: null,
+        name: null,
+        comment: null
+    },
     person: null,
     idPerson: null,
     close: null,
@@ -127,10 +140,6 @@ export default {
   }),
   methods: {
     test() {
-      this.newSocialNetAccs.push(Object.create(this.person.socialNetAccs[this.person.socialNetAccs.length-1]));
-      this.newSocialNetAccs[this.newSocialNetAccs.length-1].url = null;
-      this.newSocialNetAccs[this.newSocialNetAccs.length-1].type = null;
-      this.newSocialNetAccs[this.newSocialNetAccs.length-1].person = this.id;
       console.log(this.newSocialNetAccs);
     },
     imgPreview() {
@@ -164,6 +173,7 @@ export default {
     editing() {
       this.edit = !this.edit;
       this.newSocialNetAccs.person = this.idPerson;
+      this.newHob.person = this.idPerson;
     },
     deleting() {
       api.delete(`/persons/${this.$route.params.id}`).then((response) => {
