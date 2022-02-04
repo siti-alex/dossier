@@ -17,7 +17,15 @@
         :rows="persons"
         :columns="columns"
         row-key="id"
+        :filter="filter"
       >
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
 
         <template v-slot:header="props">
           <q-tr :props="props">
@@ -88,12 +96,17 @@ export default {
       // offline,
       dialog: ref(false),
       columns,
+      filter: ref(''),
     }
   },
   data: () => ({
     persons: [],
   }),
   methods: {
+    search(rows, terms, cols, getCellValue) {
+     // let lowerSearch = terms.search ? terms.search.toLowerCase() : "";
+     console.log(terms);
+    },
     loadData() {
       // api.get('/todos/1')
       api.get('/persons')
