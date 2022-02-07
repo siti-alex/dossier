@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+import { useQuasar, QSpinnerGears } from 'quasar'
 import { api } from 'boot/axios'
 export default {
   name: "person",
@@ -195,9 +195,11 @@ export default {
       })
     },
     save() {
-      // if (this.newSocialNetAccs.some(value => value.url !== null && value.type !== null)) {
-      //   this.person.socialNetAccs.concat(this.newSocialNetAccs);
-      // }
+      let dialog = this.$q.dialog({
+        progress: true, // we enable default settings
+        persistent: true, // we want the user to not be able to close it
+        ok: false // we want the user to not be able to close it
+      })
 
       const fullObject = new FormData();
       fullObject.append('dto', JSON.stringify(this.person));
@@ -205,6 +207,7 @@ export default {
 
       api.put(`/persons`, fullObject).then((response) => {
         console.log(response);
+        dialog.hide();
         // location.href = `/persons`;
       })
     },
