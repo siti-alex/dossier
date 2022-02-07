@@ -70,13 +70,15 @@ const linksList = [
     title: 'Экспорт в PDF',
     caption: 'Экспорт полной информации',
     icon: 'picture_as_pdf',
-    link: '/export'
+    link: '/persons'
+    // link: '/export'
   },
   {
     title: 'Поиск',
     caption: 'Поиск по различной информации',
     icon: 'search',
-    link: '/search'
+    link: '/persons'
+    // link: '/search'
   },
 ];
 
