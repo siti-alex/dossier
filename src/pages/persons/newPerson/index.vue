@@ -22,7 +22,7 @@
           <div class="row">
 
             <div>
-              <q-file filled v-model="photo" v-if="!photo" label="Вставить фото" @update:model-value="imgPreview">
+              <q-file filled v-model="photo" accept=".jpg, image/*" v-if="!photo" label="Вставить фото" @update:model-value="imgPreview">
                 <template v-slot:prepend>
                   <q-icon name="attachment" />
                 </template>

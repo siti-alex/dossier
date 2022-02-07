@@ -20,7 +20,7 @@
             </q-img>
 
              <div v-if="close == true">
-                <q-file filled v-model="photo" v-if="photo == null" label="Вставить фото" @update:model-value="imgPreview">
+                <q-file filled v-model="photo" accept=".jpg, image/*" v-if="photo == null" label="Вставить фото" @update:model-value="imgPreview">
                   <template v-slot:prepend>
                     <q-icon name="attachment" />
                   </template>
