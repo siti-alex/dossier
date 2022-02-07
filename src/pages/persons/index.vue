@@ -3,7 +3,7 @@
     <q-toolbar class="text-black shadow-2">
 <!--      <q-toolbar-title>Контакты</q-toolbar-title>-->
       <q-btn flat @click="showNewPerson" style="color: #8b2639;">Добавить запись</q-btn>
-      <q-input square filled dense v-model="filter" class="absolute-right" style="padding-top: 5px; padding-right: 5px; width: 300px">
+      <q-input square filled dense v-model="filter" class="absolute-right" style="padding-top: 5px; padding-right: 20px; width: 300px">
         <template v-slot:append>
           <q-icon name="search"/>
         </template>
