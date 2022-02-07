@@ -72,12 +72,6 @@
       <br>
 
       <div class="text-h6">Хобби</div>
-<!--        <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">-->
-<!--          <q-input :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>-->
-<!--        </div>-->
-<!--        <div v-else class="text-subtitle2">-->
-<!--          Отсутствуют-->
-<!--        </div>-->
             <div class="flex" v-for="hob in person.hobbies" v-if="person.hobbies[0].name !== null && person.hobbies[0].comment !== null || edit">
               <q-input v-if="!edit" :label="hob.name" v-model="hob.comment" :readonly="!edit" style="width: 100%"/>
               <q-input v-if="edit" label="Заметка" v-model="hob.name" style="width: 25%; margin-right: 20px"/>
@@ -98,6 +92,19 @@
           :readonly="!edit"
           type="textarea"
           v-model="not.text"
+          v-if="!edit"
+        />
+        <div class="row inline" style="width: 100%" v-if="edit">
+          <q-input label="Название примечания" v-model="not.name" style="width: 95%; margin-right: 20px"/>
+          <q-btn flat rounded icon="add" class="float-right" v-if="person.notes.indexOf(not) == person.notes.length-1" @click="person.notes.push(Object.create(newNote))"></q-btn>
+        </div>
+
+        <q-input
+          filled
+          label="Описание"
+          type="textarea"
+          v-model="not.text"
+          v-if="edit"
         />
       </div>
       <div v-else class="text-subtitle2">
@@ -129,6 +136,11 @@ export default {
         person: null,
         name: null,
         comment: null
+    },
+    newNote: {
+        person: null,
+        name: null,
+        text: null
     },
     person: null,
     idPerson: null,
@@ -174,6 +186,7 @@ export default {
       this.edit = !this.edit;
       this.newSocialNetAccs.person = this.idPerson;
       this.newHob.person = this.idPerson;
+      this.newNote.person = this.idPerson;
     },
     deleting() {
       api.delete(`/persons/${this.$route.params.id}`).then((response) => {
