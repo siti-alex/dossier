@@ -35,7 +35,11 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td auto-width>
-              <q-btn size="sm" color="red-10" round dense flat icon="edit" />
+              <q-icon size="24px" name="visibility" color="red-10">
+                <q-tooltip>
+                  Кликните по любому полю, чтобы открыть информацию
+                </q-tooltip>
+              </q-icon>
             </q-td>
             <q-td
               v-for="col in props.cols"
