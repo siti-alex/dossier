@@ -103,7 +103,8 @@
 
 
           <hr>
-          <q-btn class="full-width text-white" @click="submit" style="background-color: #8b2639">Сохранить</q-btn>
+          <q-btn class="full-width text-white" :disable="!photo" @click="submit" style="background-color: #8b2639">Сохранить</q-btn>
+          <p class="text-subtitle1" v-if="!photo">Вставьте фотографию</p>
         </q-card-section>
       </q-card>
     </q-dialog>

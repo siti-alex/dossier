@@ -112,12 +112,6 @@ export default {
           console.log(this.persons);
         })
       },
-    testing() {
-      api.get('/persons/1')
-      .then((response) => {
-        console.log(response);
-      })
-    },
     showNewPerson() {
       this.$refs.newPerson.showDialog();
     },
@@ -128,7 +122,6 @@ export default {
   },
   created() {
     this.loadData();
-    this.testing();
   }
 
 }
