@@ -113,7 +113,8 @@
 
 
       <hr>
-      <q-btn class="full-width text-white" @click="save" v-if="edit" style="background-color: #8b2639">Сохранить</q-btn>
+      <q-btn class="full-width text-white" :disable="photo == null" @click="save" v-if="edit" style="background-color: #8b2639">Сохранить</q-btn>
+      <p class="text-subtitle1" v-if="edit && photo == null">Вставьте фотографию</p>
     </q-card-section>
   </q-card>
 </template>
