@@ -5,7 +5,7 @@
       <q-btn class="col text-subtitle1" label="Экспорт" icon-right="file_download" :href="`${$axios.defaults.baseURL}/persons/${$route.params.id}/report`" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="!edit" icon-right="edit" color="red-10" flat></q-btn>
       <q-btn class="col text-subtitle1" label="Редактировать" @click="editing" v-if="edit" icon-right="edit_off" color="red-10" flat></q-btn>
-      <q-btn class="col text-subtitle1" label="Удалить" @click="confirm" icon-right="file_download" color="red-10" flat></q-btn>
+      <q-btn class="col text-subtitle1" label="Удалить" @click="confirm" icon-right="delete" color="red-10" flat></q-btn>
     </q-card-actions>
     <q-card-section>
       <div class="text-h6">Общая информация</div>
