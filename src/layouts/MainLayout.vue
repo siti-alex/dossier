@@ -25,7 +25,7 @@
 
             <q-item-section>
               <q-item-label>Администратор</q-item-label>
-              <q-item-label caption lines="1">email</q-item-label>
+              <q-item-label caption lines="1">Основной пользователь</q-item-label>
             </q-item-section>
 
             <q-item-section side>
@@ -39,7 +39,7 @@
         <q-item-label
           header
         >
-          Основные разделы
+          Разделы
         </q-item-label>
 
         <EssentialLink

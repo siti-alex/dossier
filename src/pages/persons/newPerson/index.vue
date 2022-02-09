@@ -50,10 +50,12 @@
           <br>
           <div class="row">
             <q-input class="col" v-model="newPerson.passportNumber" label="Номер паспорта" style="margin-right: 20px"/>
-            <q-input class="col" type="date" v-model="newPerson.passportExpiredDate" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.passportIssueDate" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.passportExpiredDate" label="Дата окончания срока действия паспорта" style="margin-right: 20px"/>
             <q-separator vertical style="margin-right: 20px"/>
             <q-input class="col" v-model="newPerson.visaNumber" label="Номер Visa" style="margin-right: 20px"/>
-            <q-input class="col" type="date" v-model="newPerson.visaExpiredDate" label="Дата окончания Visa" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.visaIssueDate" label="Дата выдачи Visa" style="margin-right: 20px"/>
+            <q-input class="col" type="date" v-model="newPerson.visaExpiredDate" label="Дата окончания срока действия Visa" style="margin-right: 20px"/>
           </div>
 
           <div style="height: 50px"/>
@@ -147,8 +149,10 @@ export default {
       email: null,
       passportNumber: null,
       passportExpiredDate: '2019-02-01',
+      passportIssueDate: '2019-02-01',
       visaNumber: null,
       visaExpiredDate: '2019-02-01',
+      visaIssueDate: '2019-02-01',
 
       socialNetAccs: [
         {

@@ -79,7 +79,7 @@ const columns = [
   { name: 'fat', label: 'Место работы', field: 'placeOfPost', sortable: true },
   { name: 'carbs', label: 'Телефон', field: 'phone' },
   { name: 'protein', label: 'Email', field: 'email' },
-  { name: 'sodium', label: 'Visa', field: 'visaExpiredDate', sortable: true},
+  { name: 'sodium', label: 'Окончание Visa', field: 'visaExpiredDate', sortable: true},
 ]
 
 
@@ -89,8 +89,6 @@ export default {
   components: {NewPerson},
   setup () {
     return {
-      // contacts,
-      // offline,
       dialog: ref(false),
       columns,
       filter: ref(''),
@@ -100,12 +98,7 @@ export default {
     persons: [],
   }),
   methods: {
-    search(rows, terms, cols, getCellValue) {
-     // let lowerSearch = terms.search ? terms.search.toLowerCase() : "";
-     console.log(terms);
-    },
     loadData() {
-      // api.get('/todos/1')
       api.get('/persons')
         .then((response) => {
           this.persons = response.data;
@@ -116,7 +109,6 @@ export default {
       this.$refs.newPerson.showDialog();
     },
     goPerson(id) {
-      // console.log(id);
       location.href = `/person/${id}`;
     },
   },

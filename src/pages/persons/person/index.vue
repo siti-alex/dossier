@@ -49,10 +49,12 @@
         <br>
         <div class="row">
           <q-input class="col" v-model="person.passportNumber" :readonly="!edit" label="Номер паспорта" style="margin-right: 20px"/>
-          <q-input class="col" type="date" v-model="person.passportExpiredDate" :readonly="!edit" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+          <q-input class="col" type="date" v-model="person.passportIssueDate" :readonly="!edit" label="Дата выдачи паспорта" style="margin-right: 20px"/>
+          <q-input class="col" type="date" v-model="person.passportExpiredDate" :readonly="!edit" label="Дата окончания срока действия паспорта" style="margin-right: 20px"/>
           <q-separator vertical style="margin-right: 20px"/>
           <q-input class="col" v-model="person.visaNumber" :readonly="!edit" label="Номер Visa" style="margin-right: 20px"/>
-          <q-input class="col" type="date" v-model="person.visaExpiredDate" :readonly="!edit" label="Дата окончания Visa" style="margin-right: 20px"/>
+          <q-input class="col" type="date" v-model="person.visaIssueDate" :readonly="!edit" label="Дата выдачи Visa" style="margin-right: 20px"/>
+          <q-input class="col" type="date" v-model="person.visaExpiredDate" :readonly="!edit" label="Дата окончания срока действия Visa" style="margin-right: 20px"/>
         </div>
 
       <br>
@@ -152,9 +154,6 @@ export default {
     $q: useQuasar()
   }),
   methods: {
-    test() {
-      console.log(this.newSocialNetAccs);
-    },
     imgPreview() {
       if (this.photo) {
         const file = this.photo;
