@@ -64,22 +64,22 @@ const linksList = [
     title: 'Контакты',
     caption: 'Список контактов',
     icon: 'person',
-    link: '/persons'
+    link: '/'
   },
-  {
-    title: 'Экспорт в PDF',
-    caption: 'Экспорт полной информации',
-    icon: 'picture_as_pdf',
-    link: '/persons'
-    // link: '/export'
-  },
-  {
-    title: 'Поиск',
-    caption: 'Поиск по различной информации',
-    icon: 'search',
-    link: '/persons'
-    // link: '/search'
-  },
+  // {
+  //   title: 'Экспорт в PDF',
+  //   caption: 'Экспорт полной информации',
+  //   icon: 'picture_as_pdf',
+  //   link: '/persons'
+  //   // link: '/export'
+  // },
+  // {
+  //   title: 'Поиск',
+  //   caption: 'Поиск по различной информации',
+  //   icon: 'search',
+  //   link: '/persons'
+  //   // link: '/search'
+  // },
 ];
 
 import { defineComponent, ref } from 'vue'
