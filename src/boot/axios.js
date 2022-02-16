@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
-const api = axios.create({ baseURL: 'http://192.168.202.115:8004' })
+const api = axios.create({ baseURL: 'https://192.168.202.115:8004' })
 // const api = axios.create({ baseURL: 'http://213.87.96.9:6001' })
 // const api = axios.create({ baseURL: 'https://jsonplaceholder.typicode.com' })
 
@@ -11,8 +11,19 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS';
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With';
 // axios.defaults.baseURL = 'http://213.87.96.9:6001';
-axios.defaults.baseURL = 'http://192.168.202.115:8004';
+axios.defaults.baseURL = 'https://192.168.202.115:8004';
 
+
+api.interceptors.response.use((data) => data
+  , (error) => {
+    if (error.response && error.response.status === 403 || (error.response && error.response.status === 401)) {
+      // router.replace({
+      //   name: 'auth',
+      //   query: {redirect: router.currentRoute.fullPath},
+      // })
+      location.href = `/auth`;
+    }
+  });
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 

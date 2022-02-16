@@ -65,21 +65,56 @@
 </template>
 
 <script>
+import {api} from "boot/axios";
+import { useQuasar } from 'quasar'
+
 export default {
   name: "auth",
   el: '#q-app',
   data() {
     return {
-     login: null,
-     password: null,
+     login: 'admin',
+     password: 'admin',
      passwordFieldType: 'password',
      visibility: false,
-     visibilityIcon: 'visibility'
+     visibilityIcon: 'visibility',
+     $q: useQuasar(),
     }
   },
   methods: {
     submit () {
+      let dialog = this.$q.dialog({
+        progress: true, // we enable default settings
+        persistent: true, // we want the user to not be able to close it
+        ok: false // we want the user to not be able to close it
+      })
 
+      console.log(this.login);
+      console.log(this.password);
+      const fullObject = new FormData();
+      fullObject.append('login', this.login);
+      fullObject.append('passwd', this.password);
+
+      api.post(`/auth`, fullObject, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Access-Control-Allow-Origin': 'http://192.168.202.115:8084',
+          // 'Access-Control-Allow-Origin': '*',
+          Accept: 'application/json',
+          'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+          'SameSite': 'None'
+        },
+        withCredentials: true
+      }).then((response) => {
+        console.log(response);
+        dialog.hide();
+        location.href = `/`;
+      },
+        (error) => {
+        console.log(error);
+        dialog.hide();
+        })
     },
     switchVisibility() {
       this.visibility = !this.visibility
@@ -87,7 +122,9 @@ export default {
       this.visibilityIcon =  this.visibility ? 'visibility_off' : 'visibility'
     }
   }
-
+//formdata
+// login
+// passwd
 }
 </script>
 
